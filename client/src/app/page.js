@@ -173,11 +173,13 @@ export default function Home() {
               young footballers worldwide, including those in the Championship
               (England) and Ligue 2 (France), just to name a couple. My
               flexible, remote-based approach ensures that the services
-              seamlessly integrate with your schedule and requirements. <br />
+              seamlessly integrate with your schedule and requirements.
               <br />
-              Join at WORF Football Services today and unlock your full
-              potential on the football field. Let&lsquo;s embark on this journey
-              together towards excellence.
+              <br /> Join at WORF Football Services today and unlock your full
+              potential on the football field.
+              <br />
+              <br /> Let&lsquo;s embark on this journey together towards
+              excellence.
             </Typography>
           </Grid>
         </Grid>
@@ -186,7 +188,7 @@ export default function Home() {
       <div id="about">
         <Grid container sx={{ ...sectionsLayout, ...aboutSectionStyle }}>
           <Grid item xs={12}>
-            <Typography variant="p" component="h2" marginBottom="10px">
+            <Typography variant="p" component="h2" marginBottom="5%">
               About me
             </Typography>
           </Grid>
@@ -213,8 +215,9 @@ export default function Home() {
               <br /> I’m fully equipped to elevate your game to new heights.
               WORF Football Services specialises in personalised football
               development solutions tailored to your unique needs. Whether
-              you&lsquo;re a professional athlete aiming for the top leagues or a
-              rising talent honing your skills, I’m here to propel you forward.
+              you&lsquo;re a professional athlete aiming for the top leagues or
+              a rising talent honing your skills, I’m here to propel you
+              forward.
             </Typography>
           </Grid>
           <Grid item xs={12} md={6}>
