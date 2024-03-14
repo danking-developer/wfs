@@ -17,7 +17,6 @@ const sectionStyleOne = {
   height: "100vh",
   overflow: "scroll",
   // borderBottom:"solid white"
-  
 };
 
 const sectionStyleTwo = {
@@ -129,7 +128,10 @@ export default function Home() {
             <Typography
               variant="p"
               component="p"
-              sx={{ fontSize: { md: "170%", xl: "200%" }, marginBottom:"20px" }}
+              sx={{
+                fontSize: { md: "170%", xl: "200%" },
+                marginBottom: "20px",
+              }}
             >
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               Pellentesque rhoncus velit ut eros tempor euismod. Vivamus mollis
@@ -157,6 +159,7 @@ export default function Home() {
           </Grid>
           <Grid item xs={12} md={6}>
             <img
+              alt="image of Joe Worf- Director"
               src={"/worf-portrait.jpg"}
               height="80%"
               width="95%"
@@ -191,7 +194,7 @@ export default function Home() {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="p" component="p">
-              Please provide details of your training needs and I'll contact you
+              Please provide details of your training needs and I&apos;ll contact you
               to discuss a personalised plan
             </Typography>
           </Grid>
