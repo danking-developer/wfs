@@ -1,0 +1,122 @@
+/* global css */
+/* Smooth scrolling added for jumping to sections */
+html {
+  scroll-behavior: smooth;
+  background-color: #000000;
+  font-family: var(--font-gruppo);
+}
+
+body {
+  /* Height of navbar */
+  padding-top: 70px;
+  /* Remove default HTML white space */
+  margin: 0px;
+  height: 100%;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+.home-page-h1 {
+  text-shadow: 20px 20px 20px rgba(12, 12, 12, 0.7);
+  font-family: var(--font-unbounded);
+}
+
+h2 {
+  font-size: 3rem;
+}
+
+p {
+  font-size: 1.2rem;
+}
+
+.home-page-p {
+  font-size: 1.1rem;
+  font-family: var(--font-unbounded);
+  text-shadow: 20px 20px 20px rgba(12, 12, 12, 0.1);
+}
+
+.nav-bar {
+  background-color: #ffffff;
+  color: "#000000";
+  font-family: var(--font-unbounded);
+  /* background: rgb(13, 14, 13); */
+  /* background: linear-gradient(0deg, rgba(13, 14, 13, 1) 0%, rgb(1, 51, 9) 100%); */
+}
+
+/* Main page-- home section */
+.football-bg {
+  background-image: url("/sunset-football.jpg");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.football-bg::before {
+  content: "";
+  background-color: rgba(
+    2,
+    2,
+    2,
+    0.2
+  ); /* Change the alpha value (last parameter) to adjust darkness */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.football-bg .content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Loading wheel */
+/* Styling for the overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+  z-index: 9999; /* make sure it's above other content */
+}
+
+/* Styling for the loading spinner */
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 8px solid #f3f3f3; /* Light grey */
+  border-top: 8px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+  z-index: 10000; /* make sure it's above the overlay */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+/* animation: background-fade 10s infinite;    
+  
+  
+  @keyframes background-fade {
+      0% {
+          background:red;
+      }
+      50% {
+          background:blue;
+      }
+      100% {
+          background:green;
+      } */
