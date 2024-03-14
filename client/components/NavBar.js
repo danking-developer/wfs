@@ -13,6 +13,7 @@ const navContainerStyle = {
   height: "70px",
   //   vertical align links
   alignItems: "center",
+  borderBottom:"solid #c4c4c4"
 };
 
 const linkLayout = {
@@ -32,7 +33,7 @@ const smLinkStyles = {
   color: "#000000",
 };
 
-const menuOptions = ["home", "about", "contact"];
+const menuOptions = ["home", "services", "about", "contact"];
 
 export default function NavBar() {
   const [showNav, setShowNav] = useState(false);
