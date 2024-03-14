@@ -39,7 +39,7 @@ const contactSectionStyle = {
 };
 
 const servicesArray = [
-  `Tactical and Technical Analysis: Delve deep into your team&lsquo;s
+  `Tactical and Technical Analysis: Delve deep into your team's
 tactics and playing style with individualised analysis services.`,
   `Opposition Analysis: Gain a competitive edge by dissecting the
 strengths and weaknesses of your adversaries.`,
