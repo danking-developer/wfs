@@ -1,5 +1,5 @@
 import { Grid, Typography } from "@mui/material";
-import FacebookIcon from "@mui/icons-material/Facebook";
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import InstagramIcon from "@mui/icons-material/Instagram";
 import Link from "next/link";
 
@@ -30,10 +30,10 @@ export default function Footer() {
         <Typography variant="p" component="p">
           WORF Football Services {year}
         </Typography>
-        <Link href={"https://www.facebook.com"} style={linkStyles}>
-          <FacebookIcon fontSize="small" />
+        <Link href={process.env.NEXT_PUBLIC_LINKED_IN_LINK} style={linkStyles}>
+          <LinkedInIcon fontSize="small" />
         </Link>
-        <Link href={"https://www.instagram.com"} style={linkStyles}>
+        <Link href={process.env.NEXT_PUBLIC_INSTA_LINK} style={linkStyles}>
           <InstagramIcon fontSize="small" />
         </Link>
       </Grid>

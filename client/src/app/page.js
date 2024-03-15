@@ -119,7 +119,11 @@ export default function Home() {
         >
           <Grid container className="content">
             <Grid item xs={12}>
-              <Typography variant="p" component="h1" className="home-page-h1">
+              <Typography
+                variant="p"
+                component="h1"
+                className="home-page-h1"
+              >
                 WORF
               </Typography>
               <Typography variant="p" component="h1" className="home-page-h1">
@@ -153,7 +157,7 @@ export default function Home() {
                 component="p"
                 className="services-p"
                 sx={{
-                  fontSize: { md: "170%", xl: "200%" },
+                  fontSize: { md: "170%", xl: "230%" },
                   marginBottom: "20px",
                 }}
               >
@@ -165,7 +169,7 @@ export default function Home() {
               component="p"
               className="services-p"
               sx={{
-                fontSize: { md: "170%", xl: "200%" },
+                fontSize: { md: "170%", xl: "230%" },
                 marginBottom: "20px",
               }}
             >
@@ -197,7 +201,7 @@ export default function Home() {
               variant="p"
               component="p"
               sx={{
-                fontSize: { md: "170%", xl: "200%" },
+                fontSize: { md: "170%", xl: "230%" },
                 marginBottom: "20px",
               }}
             >
