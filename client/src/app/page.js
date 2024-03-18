@@ -2,26 +2,31 @@
 import { Grid, Typography } from "@mui/material";
 import ContactForm from "../../components/ContactForm";
 import Loader from "../../components/Loader";
-import { useState } from "react";
 import Head from "next/head";
+import { useState, useEffect } from "react";
+// fetch request for data in Sanity
+import { fetchPageContent } from "../../sanity/lib/fetch";
+// Needed to display images from sanity and convert to url
+import { urlForImage } from "../../sanity/lib/image";
 
 const sectionsLayout = {
   padding: "65px 15px 0px 15px",
   width: "100vw",
+  marginBottom: "30px",
   overflow: "visible",
 };
 
 const homeSectionStyle = {
   backgroundColor: "#000000",
   color: "#ffffff",
-  height: "100vh",
+  minHeight: "100vh",
   marginBottom: "10%",
 };
 
 const aboutSectionStyle = {
   backgroundColor: "#000000",
   color: "#ffffff",
-  height: "100%",
+  minHeight: "100vh",
   overflow: "display",
   // borderBottom:"solid white"
 };
@@ -38,27 +43,25 @@ const contactSectionStyle = {
   height: "100vh",
 };
 
-const servicesArray = [
-  `Tactical and Technical Analysis: Delve deep into your team's
-tactics and playing style with individualised analysis services.`,
-  `Opposition Analysis: Gain a competitive edge by dissecting the
-strengths and weaknesses of your adversaries.`,
-  `     Mentality Training: Sharpen your mental fortitude and resilience
-with specialised training programs.`,
-  `Mentorship Programme: Benefit from one-on-one mentoring
-sessions designed to nurture your growth and potential.`,
-  `Career Guidance: Navigate the intricacies of the football
-industry with my insightful career guidance services.`,
-  ` Highlights Packages: Showcase your skills with professionally
-crafted highlight reels tailored to impress.`,
-  `     Social Media Management: Enhance your online presence and
-engagement with strategic social media management solutions.`,
-];
 
 export default function Home() {
   const [helpText, setHelperText] = useState("");
   const [loading, setIsLoading] = useState(false);
   const [resetForm, setResetForm] = useState(false);
+  const [homeContent, setHomeContent] = useState(null);
+  const [servicesContent, setServicesContent] = useState(null);
+  const [aboutContent, setAboutContent] = useState(null);
+
+   // fetch page content from Sanity
+  useEffect(() => {
+    async function fetchData() {
+      const data = await fetchPageContent();
+      setAboutContent(data.aboutSection[0]);
+      setServicesContent(data.servicesSection[0]);
+      setHomeContent(data.homeSection[0]);
+    }
+    fetchData();
+  }, []);
 
   const submitContactRequest = async (data) => {
     if (!loading) {
@@ -73,7 +76,6 @@ export default function Home() {
         const json = await response.json();
 
         if (response.status === 200) {
-          console.log("Success! ", json.msg);
           setIsLoading(false);
           setHelperText(json.msg);
           // This will update the resetData prop in ContactForm below, which will then clear data after 3 secs with the useEffect Hook
@@ -81,7 +83,6 @@ export default function Home() {
         } else {
           // set error message for single error
           if (json.msg) {
-            console.log("Failed! ", json.msg);
             setIsLoading(false);
             setHelperText(json.msg);
           }
@@ -92,14 +93,12 @@ export default function Home() {
             json.errors.map((error) => {
               errors.push(error.msg);
             });
-            console.log("Errors in submitting form: ", errors.join(". "));
             setIsLoading(false);
             setHelperText(errors.join(". "));
           }
         }
       } catch (error) {
         setIsLoading(false);
-        console.log("Server error in submitting form");
         setHelperText("Server error in submitting form");
       }
     }
@@ -119,36 +118,67 @@ export default function Home() {
         >
           <Grid container className="content">
             <Grid item xs={12}>
-              <Typography
-                variant="p"
-                component="h1"
-                className="home-page-h1"
-              >
-                WORF
-              </Typography>
               <Typography variant="p" component="h1" className="home-page-h1">
-                Football Services
+                WORF
+                <br /> Football Services
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="p" component="p" className="home-page-p">
-                {" "}
-                Welcome to WORF Football Services, where individual football
-                development takes centre stage. With a decade of dedicated
-                experience in the football and sports industry, I bring a wealth
-                of footballing expertise to the table.
-              </Typography>
+              {homeContent &&
+                homeContent.homeBody &&
+                homeContent.homeBody.map((block, index) => (
+                  <Typography
+                    key={index}
+                    variant="p"
+                    component="p"
+                    className="home-page-p"
+                  >
+                    {/* Extract text content from each block */}
+                    {block.children.map((child) => child.text).join(" ")}
+                  </Typography>
+                ))}
             </Grid>
           </Grid>
         </Grid>
       </div>
       <div id="services">
         <Grid container sx={{ ...sectionsLayout, ...servicesSectionStyle }}>
+          {servicesContent && (
+            <>
+              <Grid item xs={12}>
+                <Typography variant="p" component="h2" marginBottom="10px ">
+                  {servicesContent.servicesTitle}
+                </Typography>
+              </Grid>
+
+              {/* Map out the paragraphs using Material UI Typography */}
+              <Grid item xs={12}>
+                {servicesContent.servicesBody &&
+                  servicesContent.servicesBody.map((block, index) => (
+                    <Typography
+                      key={index}
+                      variant="p"
+                      component="p"
+                      className="services-p"
+                      sx={{
+                        fontSize: { md: "170%", xl: "230%" },
+                        marginBottom: "20px",
+                      }}
+                    >
+                      {/* Extract text content from each block */}
+                      {block.children.map((child) => child.text).join(" ")}
+                    </Typography>
+                  ))}
+              </Grid>
+            </>
+          )}
+          {/* {servicesContent && (
           <Grid item xs={12}>
             <Typography variant="p" component="h2" marginBottom="10px">
-              Services
+              {servicesContent.servicesTitle}
             </Typography>
           </Grid>
+          )}
           <Grid item xs={12}>
             {servicesArray.map((service, index) => (
               <Typography
@@ -185,62 +215,60 @@ export default function Home() {
               <br /> Let&lsquo;s embark on this journey together towards
               excellence.
             </Typography>
-          </Grid>
+          </Grid> */}
         </Grid>
       </div>
 
       <div id="about">
         <Grid container sx={{ ...sectionsLayout, ...aboutSectionStyle }}>
-          <Grid item xs={12}>
-            <Typography variant="p" component="h2" marginBottom="5%">
-              About me
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Typography
-              variant="p"
-              component="p"
-              sx={{
-                fontSize: { md: "170%", xl: "230%" },
-                marginBottom: "20px",
-              }}
-            >
-              My journey spans across diverse landscapes, from coaching stints
-              in England, Tanzania, and New Zealand to strategic roles in
-              football management (Estudiantes & Wellington Marist AFC),
-              tactical analysis (Tactalyse), and technical analysis (Football
-              Radar).
-              <br />
-              <br /> I am a FA qualified coach, with a Masters in Sports
-              Psychology from the University of West England, a Football
-              Business degree from the Open University, and the PFSA Level 1
-              Talent Identification in Football qualification.
-              <br />
-              <br /> I’m fully equipped to elevate your game to new heights.
-              WORF Football Services specialises in personalised football
-              development solutions tailored to your unique needs. Whether
-              you&lsquo;re a professional athlete aiming for the top leagues or
-              a rising talent honing your skills, I’m here to propel you
-              forward.
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <img
-              alt="image of Joe Worf- Director"
-              src={"/worf-portrait.jpg"}
-              height="80%"
-              width="95%"
-              style={{ margin: "0% 2%" }}
-            />
-            <Typography
-              variant="p"
-              component="p"
-              fontSize={"14px"}
-              textAlign={"center"}
-            >
-              Joe Worf- Director
-            </Typography>
-          </Grid>
+          {aboutContent && (
+            <>
+              <Grid item xs={12}>
+                <Typography variant="p" component="h2" marginBottom="5%">
+                  {aboutContent.aboutTitle}
+                </Typography>
+              </Grid>
+
+              {/* Map out the paragraphs using Material UI Typography */}
+              <Grid item xs={12} md={6}>
+                {aboutContent.aboutBody &&
+                  aboutContent.aboutBody.map((block, index) => (
+                    <Typography
+                      key={index}
+                      variant="p"
+                      component="p"
+                      sx={{
+                        fontSize: { md: "150%", xl: "210%" },
+                        marginBottom: "20px",
+                      }}
+                    >
+                      {/* Extract text content from each block */}
+                      {block.children.map((child) => child.text).join(" ")}
+                    </Typography>
+                  ))}
+              </Grid>
+            </>
+          )}
+          {/* Render image if found */}
+          {aboutContent && aboutContent.aboutImage && (
+            <Grid item xs={12} md={6}>
+              <img
+                alt="image of Joe Worf- Director"
+                src={urlForImage(aboutContent.aboutImage)}
+                height="90%"
+                width="95%"
+                style={{ margin: "0% 3%" }}
+              />
+              <Typography
+                variant="p"
+                component="p"
+                fontSize={"14px"}
+                textAlign={"center"}
+              >
+                Joe Worf- Director
+              </Typography>
+            </Grid>
+          )}
         </Grid>
       </div>
       <div id="contact">

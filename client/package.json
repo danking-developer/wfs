@@ -13,10 +13,15 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.12",
     "@mui/material": "^5.15.12",
+    "@sanity/image-url": "^1.0.2",
+    "@sanity/vision": "^3.34.0",
     "framer-motion": "^11.0.8",
     "next": "14.1.2",
+    "next-sanity": "^7.1.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "sanity": "^3.34.0",
+    "styled-components": "^6.1.8"
   },
   "devDependencies": {
     "eslint": "^8",
