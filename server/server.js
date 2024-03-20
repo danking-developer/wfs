@@ -4,7 +4,7 @@ const app = express();
 const cors = require("cors");
 const port = process.env.PORT;
 const { router } = require("./routes/routes");
-const frontendURL = process.env.FRONTEND_URL;
+const frontendURL = process.env.FRONTEND_URL_LOCAL;
 
 if (process.env.NODE_ENV === "production") {
   app.set("trust proxy", 1); // trust first proxy

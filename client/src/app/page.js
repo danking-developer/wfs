@@ -43,7 +43,6 @@ const contactSectionStyle = {
   height: "100vh",
 };
 
-
 export default function Home() {
   const [helpText, setHelperText] = useState("");
   const [loading, setIsLoading] = useState(false);
@@ -52,26 +51,54 @@ export default function Home() {
   const [servicesContent, setServicesContent] = useState(null);
   const [aboutContent, setAboutContent] = useState(null);
 
-   // fetch page content from Sanity
   useEffect(() => {
+    // ----- Connect API backend on page load ------
+    const connectServer = async () => {
+      try {
+        const response = await fetch(
+          process.env.NEXT_PUBLIC_SERVER_API_CONNECT,
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+
+        const json = await response.json();
+
+        if (response.status === 200) {
+          console.log("Server connected: ", json.msg);
+        } else {
+          console.log("Server not connected: ", json.msg);
+        }
+      } catch (error) {
+        console.log("Error connecting to backend server", error);
+      }
+    };
+
+    // ----- Fetch page content from CMS on page load and wake server------
     async function fetchData() {
       const data = await fetchPageContent();
       setAboutContent(data.aboutSection[0]);
       setServicesContent(data.servicesSection[0]);
       setHomeContent(data.homeSection[0]);
     }
+    connectServer();
     fetchData();
   }, []);
 
+  // ----- Contact request emailed on form submission -------
   const submitContactRequest = async (data) => {
     if (!loading) {
       setIsLoading(true);
       try {
-        const response = await fetch(process.env.NEXT_PUBLIC_SERVER_API, {
-          method: "POST",
-          body: JSON.stringify(data),
-          headers: { "Content-Type": "application/json" },
-        });
+        const response = await fetch(
+          process.env.NEXT_PUBLIC_SERVER_API_CONTACT_REQUEST,
+          {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: { "Content-Type": "application/json" },
+          }
+        );
 
         const json = await response.json();
 
