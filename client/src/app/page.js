@@ -62,16 +62,8 @@ export default function Home() {
             headers: { "Content-Type": "application/json" },
           }
         );
-
-        const json = await response.json();
-
-        if (response.status === 200) {
-          console.log("Server connected: ", json.msg);
-        } else {
-          console.log("Server not connected: ", json.msg);
-        }
       } catch (error) {
-        console.log("Error connecting to backend server", error);
+        console.log("Error connecting to api server");
       }
     };
 
