@@ -12,6 +12,7 @@ export async function fetchPageContent() {
         "aboutSection": *[_type == "aboutSection"]{ aboutTitle, aboutBody, aboutImage },
         "homeSection": *[_type == "homeSection"]{ homeTitle, homeBody },
         "servicesSection": *[_type == "servicesSection"]{ servicesTitle, servicesBody },
+        "playersSection": *[_type == "playersSection"]{ playerName, playerDescription, playerImage },
         "socialsSection": *[_type == "socialsSection"]{ instagramURL, linkedInURL },
       }`;
 

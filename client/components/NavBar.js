@@ -33,7 +33,7 @@ const smLinkStyles = {
   color: "#000000",
 };
 
-const menuOptions = ["home", "services", "about", "contact"];
+const menuOptions = ["home", "services", "about", "players", "contact"];
 
 export default function NavBar() {
   const [showNav, setShowNav] = useState(false);

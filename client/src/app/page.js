@@ -1,6 +1,7 @@
 "use client";
 import { Grid, Typography } from "@mui/material";
 import ContactForm from "../../components/ContactForm";
+import PlayerCarousel from "../../components/PlayerCarousel";
 import Loader from "../../components/Loader";
 import Head from "next/head";
 import { useState, useEffect } from "react";
@@ -10,37 +11,40 @@ import { fetchPageContent } from "../../sanity/lib/fetch";
 import { urlForImage } from "../../sanity/lib/image";
 
 const sectionsLayout = {
-  padding: "65px 15px 0px 15px",
+  padding: "65px 35px 30px 35px",
   width: "100vw",
-  marginBottom: "30px",
-  overflow: "visible",
+  minHeight: "100vh",
+  overflow: "scroll",
 };
 
 const homeSectionStyle = {
   backgroundColor: "#000000",
   color: "#ffffff",
-  minHeight: "100vh",
-  marginBottom: "10%",
 };
 
 const aboutSectionStyle = {
-  backgroundColor: "#000000",
-  color: "#ffffff",
-  minHeight: "100vh",
-  overflow: "display",
-  // borderBottom:"solid white"
+  // backgroundColor: "#000000",
+  // color: "#ffffff",
+  backgroundColor: "#ffffff",
+  color: "#000000",
 };
 
 const servicesSectionStyle = {
-  backgroundColor: "#ffffff",
-  color: "#000000",
-  minHeight: "100vh",
+  // backgroundColor: "#ffffff",
+  // color: "#000000",
+  backgroundColor: "#000000",
+  color: "#ffffff",
+};
+
+const playersSectionStyle = {
+  backgroundColor: "#e8f0fc",
+  backgroundColor: "#000000",
+  color: "#ffffff",
 };
 
 const contactSectionStyle = {
   backgroundColor: "#ffffff",
   color: "#000000",
-  height: "100vh",
 };
 
 export default function Home() {
@@ -49,30 +53,31 @@ export default function Home() {
   const [resetForm, setResetForm] = useState(false);
   const [homeContent, setHomeContent] = useState(null);
   const [servicesContent, setServicesContent] = useState(null);
+  const [playerContent, setPlayerContent] = useState(null);
   const [aboutContent, setAboutContent] = useState(null);
 
   useEffect(() => {
     // ----- Connect API backend on page load ------
     const connectServer = async () => {
       try {
-        const response = await fetch(
-          process.env.NEXT_PUBLIC_SERVER_API_CONNECT,
-          {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-          }
-        );
+        await fetch(process.env.NEXT_PUBLIC_SERVER_API_CONNECT, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
       } catch (error) {
         console.log("Error connecting to api server");
       }
     };
 
-    // ----- Fetch page content from CMS on page load and wake server------
+    // ----- Fetch page content from CMS on page load and wake server ------
     async function fetchData() {
       const data = await fetchPageContent();
+
+      console.log("data check: ", data)
       setAboutContent(data.aboutSection[0]);
       setServicesContent(data.servicesSection[0]);
       setHomeContent(data.homeSection[0]);
+      setPlayerContent(data.playersSection);
     }
     connectServer();
     fetchData();
@@ -191,50 +196,6 @@ export default function Home() {
               </Grid>
             </>
           )}
-          {/* {servicesContent && (
-          <Grid item xs={12}>
-            <Typography variant="p" component="h2" marginBottom="10px">
-              {servicesContent.servicesTitle}
-            </Typography>
-          </Grid>
-          )}
-          <Grid item xs={12}>
-            {servicesArray.map((service, index) => (
-              <Typography
-                key={index}
-                variant="p"
-                component="p"
-                className="services-p"
-                sx={{
-                  fontSize: { md: "170%", xl: "230%" },
-                  marginBottom: "20px",
-                }}
-              >
-                &#x2022; {service}
-              </Typography>
-            ))}
-            <Typography
-              variant="p"
-              component="p"
-              className="services-p"
-              sx={{
-                fontSize: { md: "170%", xl: "230%" },
-                marginBottom: "20px",
-              }}
-            >
-              Partnering with Tactalyse, I collaborate with professional and
-              young footballers worldwide, including those in the Championship
-              (England) and Ligue 2 (France), just to name a couple. My
-              flexible, remote-based approach ensures that the services
-              seamlessly integrate with your schedule and requirements.
-              <br />
-              <br /> Join at WORF Football Services today and unlock your full
-              potential on the football field.
-              <br />
-              <br /> Let&lsquo;s embark on this journey together towards
-              excellence.
-            </Typography>
-          </Grid> */}
         </Grid>
       </div>
 
@@ -288,6 +249,15 @@ export default function Home() {
               </Typography>
             </Grid>
           )}
+        </Grid>
+      </div>
+      <div id="players">
+        <Grid
+          container
+          rowGap={0}
+          sx={{ ...sectionsLayout, ...playersSectionStyle }}
+        >
+          {playerContent && <PlayerCarousel players={playerContent} />}
         </Grid>
       </div>
       <div id="contact">
