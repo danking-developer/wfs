@@ -72,8 +72,6 @@ export default function Home() {
     // ----- Fetch page content from CMS on page load and wake server ------
     async function fetchData() {
       const data = await fetchPageContent();
-
-      console.log("data check: ", data)
       setAboutContent(data.aboutSection[0]);
       setServicesContent(data.servicesSection[0]);
       setHomeContent(data.homeSection[0]);

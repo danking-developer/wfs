@@ -9,8 +9,6 @@ import { urlForImage } from "../sanity/lib/image";
 const Carousel = ({players}) => {
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0); // State to track the index of the currently displayed player
 
-  console.log("players check: ", players)
-
   const buttonStyles = {
     color:"#ffffff",
   };
