@@ -14,7 +14,8 @@ const sectionsLayout = {
   padding: "65px 35px 30px 35px",
   width: "100vw",
   minHeight: "100vh",
-  overflow: "scroll",
+  overflowX: "hidden",
+  overflowY: "scroll",
 };
 
 const homeSectionStyle = {
